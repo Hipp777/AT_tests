@@ -1,4 +1,4 @@
-package testSelenium;
+package testSelenium.model;
 
 public class GroupData {
     private final String name;

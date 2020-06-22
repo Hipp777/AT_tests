@@ -1,4 +1,4 @@
-package testSelenium;
+package testSelenium.model;
 
 public class UserData {
     private final String name;
