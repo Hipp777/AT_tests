@@ -7,7 +7,7 @@ import org.openqa.selenium.*;
  * Created by 1 on 22.06.2020.
  */
 public class HelperBase {
-    private boolean acceptNextAlert = true;
+    protected boolean acceptNextAlert = true;
     protected WebDriver driver;
 
     public HelperBase(WebDriver driver) {
@@ -24,7 +24,7 @@ public class HelperBase {
         driver.findElement(locator).click();
     }
 
-    private boolean isElementPresent(By by) {
+    protected boolean isElementPresent(By by) {
         try {
             driver.findElement(by);
             return true;
@@ -33,7 +33,7 @@ public class HelperBase {
         }
     }
 
-    private boolean isAlertPresent() {
+    protected boolean isAlertPresent() {
         try {
             driver.switchTo().alert();
             return true;
@@ -42,7 +42,7 @@ public class HelperBase {
         }
     }
 
-    private String closeAlertAndGetItsText() {
+    protected String closeAlertAndGetItsText() {
         try {
             Alert alert = driver.switchTo().alert();
             String alertText = alert.getText();

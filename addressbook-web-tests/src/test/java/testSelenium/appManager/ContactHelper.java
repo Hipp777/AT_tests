@@ -4,11 +4,14 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.Select;
 import testSelenium.model.UserData;
+import static org.testng.Assert.*;
 
 /**
  * Created by 1 on 22.06.2020.
  */
 public class ContactHelper extends HelperBase {
+
+
 
     public ContactHelper(WebDriver driver) {
         super(driver);
@@ -43,7 +46,16 @@ public class ContactHelper extends HelperBase {
         driver.findElement(By.name("ayear")).click();
     }
 
-    public void navigateToCreateUserForm() {
+    public void navigateToCreateContactForm() {
         driver.findElement(By.linkText("add new")).click();
+    }
+
+    public void selectSecondContact(){
+        click(By.xpath("//table[@id='maintable']/tbody/tr[3]/td/input"));
+        acceptNextAlert = true;
+    }
+    public void deleteContact(){
+        click(By.xpath("//input[@value='Delete']"));
+        assertTrue(closeAlertAndGetItsText().matches("^Delete 1 addresses[\\s\\S]$"));
     }
 }
