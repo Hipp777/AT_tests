@@ -6,8 +6,12 @@
 
     <groupId>AT_tests2</groupId>
     <artifactId>1.1</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
-<dependencies>
+    <modules>
+        <module>addressbook-web-tests</module>
+    </modules>
+    <dependencies>
     <!-- https://mvnrepository.com/artifact/org.testng/testng -->
     <dependency>
         <groupId>org.testng</groupId>
