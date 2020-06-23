@@ -20,7 +20,7 @@ public class GroupHelper extends HelperBase {
     public void fillGroupForm(GroupData groupData) {
         type(By.name("group_name"), groupData.getName());
         type(By.name("group_header"), groupData.getHeader());
-        type (By.name("group_footer"),groupData.getFooter());
+        type(By.name("group_footer"), groupData.getFooter());
 
     }
 
@@ -29,6 +29,21 @@ public class GroupHelper extends HelperBase {
     }
 
     public void goToGroupsPage() {
-      click(By.linkText("groups"));
+        click(By.linkText("groups"));
+    }
+
+    public void selectFirstGroup() {
+        click(By.name("selected[]"));
+
+    }
+
+    public void startEditGroup() {
+       click(By.xpath("(//input[@name='edit'])[2]"));
+    }
+    public void submitEditGroup(){
+        click(By.name("update"));
+    }
+    public void deleteGroup() {
+        click(By.xpath("(//input[@name='delete'])[2]"));
     }
 }

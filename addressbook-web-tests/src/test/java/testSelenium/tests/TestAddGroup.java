@@ -3,7 +3,7 @@ package testSelenium.tests;
 import org.testng.annotations.*;
 import testSelenium.model.GroupData;
 
-public class FirstTest extends TestBase {
+public class TestAddGroup extends TestBase {
 
     @Test
     public void testFirst() throws Exception {

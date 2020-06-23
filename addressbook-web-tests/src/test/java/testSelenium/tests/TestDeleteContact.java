@@ -5,7 +5,7 @@ import org.testng.annotations.Test;
 /**
  * Created by 1 on 22.06.2020.
  */
-public class DeleteContactTest3 extends TestBase {
+public class TestDeleteContact extends TestBase {
     @Test
     public void deleteContact() {
         app.getContactHelper().selectSecondContact();

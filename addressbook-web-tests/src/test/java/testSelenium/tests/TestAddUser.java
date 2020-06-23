@@ -4,7 +4,7 @@ import org.testng.annotations.*;
 import testSelenium.model.UserData;
 
 
-public class SecondTestAddUser extends TestBase {
+public class TestAddUser extends TestBase {
 
     @Test
     public void testSecondTestAddUser() throws Exception {
