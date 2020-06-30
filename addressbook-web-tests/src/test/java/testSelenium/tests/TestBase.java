@@ -1,5 +1,9 @@
 package testSelenium.tests;
 
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.BrowserType;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import testSelenium.appManager.ApplicationManager;
@@ -7,7 +11,7 @@ import testSelenium.appManager.ApplicationManager;
 
 public class TestBase {
 
-    protected final ApplicationManager app = new ApplicationManager();
+    protected final ApplicationManager app = new ApplicationManager(BrowserType.IE);
 
     @BeforeClass(alwaysRun = true)
     public void setUp() throws Exception {
