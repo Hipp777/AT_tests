@@ -61,4 +61,8 @@ public class GroupHelper extends HelperBase {
     public void deleteGroup() {
         click(By.xpath("(//input[@name='delete'])[2]"));
     }
+
+    public int getGroupCount (){
+        return  driver.findElements(By.name("selected[]")).size();
+    }
 }

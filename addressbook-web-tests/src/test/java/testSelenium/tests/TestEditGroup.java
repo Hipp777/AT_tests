@@ -1,5 +1,6 @@
 package testSelenium.tests;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import testSelenium.model.GroupData;
 
@@ -9,7 +10,9 @@ import testSelenium.model.GroupData;
 public class TestEditGroup extends TestBase {
     @Test
     public void editFirstGroup() {
-
+        int after;
+        app.getGroupHelper().goToGroupsPage();
+        int before = app.getGroupHelper().getGroupCount();
         if (app.getGroupHelper().checkFirstGroup()) {
             app.getGroupHelper().goToGroupsPage();
             app.getGroupHelper().selectFirstGroup();
@@ -17,6 +20,8 @@ public class TestEditGroup extends TestBase {
             app.getGroupHelper().fillGroupForm(new GroupData("testEdit111", "Test edit 2", "Testedit3"));
             app.getGroupHelper().submitEditGroup();
             app.getGroupHelper().goToGroupsPage();
+            after = app.getGroupHelper().getGroupCount();
+            Assert.assertEquals(after, before );
             app.logout();
         } else {
             app.getGroupHelper().addGroup();
@@ -27,6 +32,8 @@ public class TestEditGroup extends TestBase {
             app.getGroupHelper().fillGroupForm(new GroupData("testEdit222", "Test edit 2", "Testedit3"));
             app.getGroupHelper().submitEditGroup();
             app.getGroupHelper().goToGroupsPage();
+            after = app.getGroupHelper().getGroupCount();
+            Assert.assertEquals(after, before + 1);
             app.logout();
 
         }

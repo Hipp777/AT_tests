@@ -79,7 +79,9 @@ public class ContactHelper extends HelperBase {
     public boolean checkSecondContact() {
         return isElementPresent(By.name("//table[@id='maintable']/tbody/tr[3]/td/input"));
     }
-
+    public int getContactCount (){
+        return  driver.findElements(By.name("selected[]")).size();
+    }
     public boolean checkFirstContact() {
         return isElementPresent(By.name("selected[]"));
     }

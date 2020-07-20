@@ -1,5 +1,6 @@
 package testSelenium.tests;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import testSelenium.model.UserData;
 
@@ -9,6 +10,8 @@ import testSelenium.model.UserData;
 public class TestDeleteContact extends TestBase {
     @Test
     public void deleteContact() {
+        int after;
+        int before = app.getContactHelper().getContactCount();
         if (!app.getContactHelper().checkFirstContact()) {
             app.getContactHelper().addContact();
             app.getNavigationHelper().navigateToHomePage();
@@ -16,11 +19,15 @@ public class TestDeleteContact extends TestBase {
             app.getContactHelper().selectfirstContactOnHomePage();
             app.getContactHelper().deleteContact();
             app.getNavigationHelper().navigateToHomePage();
+            after = app.getContactHelper().getContactCount();
+            Assert.assertEquals(after, before );
             app.logout();
         } else {
             app.getContactHelper().selectfirstContactOnHomePage();
             app.getContactHelper().deleteContact();
             app.getNavigationHelper().navigateToHomePage();
+            after = app.getContactHelper().getContactCount();
+            Assert.assertEquals(after, before-1);
             app.logout();
         }
     }

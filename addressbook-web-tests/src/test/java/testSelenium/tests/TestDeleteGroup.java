@@ -1,5 +1,6 @@
 package testSelenium.tests;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 /**
@@ -8,10 +9,15 @@ import org.testng.annotations.Test;
 public class TestDeleteGroup extends TestBase {
     @Test
     public void testDelGroup() {
+        int after;
+        app.getGroupHelper().goToGroupsPage();
+        int before = app.getGroupHelper().getGroupCount();
         if (app.getGroupHelper().checkFirstGroup()) {
             app.getGroupHelper().selectFirstGroup();
             app.getGroupHelper().deleteGroup();
             app.getGroupHelper().goToGroupsPage();
+            after = app.getGroupHelper().getGroupCount();
+            Assert.assertEquals(after, before - 1);
             app.logout();
         } else {
             app.getGroupHelper().addGroup();
@@ -19,8 +25,11 @@ public class TestDeleteGroup extends TestBase {
             app.getGroupHelper().selectFirstGroup();
             app.getGroupHelper().deleteGroup();
             app.getGroupHelper().goToGroupsPage();
+            after = app.getGroupHelper().getGroupCount();
+            Assert.assertEquals(after, before);
             app.logout();
         }
+
     }
 
 }
