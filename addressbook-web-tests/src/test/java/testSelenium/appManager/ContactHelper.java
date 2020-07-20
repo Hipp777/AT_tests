@@ -2,9 +2,14 @@ package testSelenium.appManager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.Test;
+import testSelenium.model.GroupData;
 import testSelenium.model.UserData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.testng.Assert.*;
 
@@ -53,8 +58,8 @@ public class ContactHelper extends HelperBase {
         acceptNextAlert = true;
     }
 
-    public void selectfirstContactOnHomePage() {
-        click(By.name("selected[]"));
+    public void selectContact(int index) {
+        driver.findElements(By.name("selected[]")).get(index).click();
     }
 
     public void editContactOnHomePage() {
@@ -86,4 +91,14 @@ public class ContactHelper extends HelperBase {
         return isElementPresent(By.name("selected[]"));
     }
 
+   /* public List<UserData> getContactList() {
+        List <UserData> users = new ArrayList<UserData>();
+        List <WebElement> elements = driver.findElements(By.cssSelector("span.group"));
+        for(WebElement element:elements){
+            String name = element.getText();
+            GroupData group = new GroupData(name, null,null);
+            users.add(group);
+        }
+        return users;
+    }*/
 }
