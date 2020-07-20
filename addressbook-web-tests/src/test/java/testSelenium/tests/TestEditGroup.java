@@ -9,12 +9,28 @@ import testSelenium.model.GroupData;
 public class TestEditGroup extends TestBase {
     @Test
     public void editFirstGroup() {
-        app.getGroupHelper().goToGroupsPage();
-        app.getGroupHelper().selectFirstGroup();
-        app.getGroupHelper().startEditGroup();
-        app.getGroupHelper().fillGroupForm(new GroupData("testEdit1", "Test edit 2", "Testedit3"));
-        app.getGroupHelper().submitEditGroup();
-        app.getGroupHelper().goToGroupsPage();
-        app.logout();
+
+        if (app.getGroupHelper().checkFirstGroup()) {
+            app.getGroupHelper().goToGroupsPage();
+            app.getGroupHelper().selectFirstGroup();
+            app.getGroupHelper().startEditGroup();
+            app.getGroupHelper().fillGroupForm(new GroupData("testEdit111", "Test edit 2", "Testedit3"));
+            app.getGroupHelper().submitEditGroup();
+            app.getGroupHelper().goToGroupsPage();
+            app.logout();
+        } else {
+            app.getGroupHelper().addGroup();
+
+            app.getGroupHelper().goToGroupsPage();
+            app.getGroupHelper().selectFirstGroup();
+            app.getGroupHelper().startEditGroup();
+            app.getGroupHelper().fillGroupForm(new GroupData("testEdit222", "Test edit 2", "Testedit3"));
+            app.getGroupHelper().submitEditGroup();
+            app.getGroupHelper().goToGroupsPage();
+            app.logout();
+
+        }
     }
+
 }
+

@@ -8,11 +8,19 @@ import org.testng.annotations.Test;
 public class TestDeleteGroup extends TestBase {
     @Test
     public void testDelGroup() {
-        app.getGroupHelper().goToGroupsPage();
-        app.getGroupHelper().selectFirstGroup();
-        app.getGroupHelper().deleteGroup();
-        app.getGroupHelper().goToGroupsPage();
-        app.logout();
+        if (app.getGroupHelper().checkFirstGroup()) {
+            app.getGroupHelper().selectFirstGroup();
+            app.getGroupHelper().deleteGroup();
+            app.getGroupHelper().goToGroupsPage();
+            app.logout();
+        } else {
+            app.getGroupHelper().addGroup();
+
+            app.getGroupHelper().selectFirstGroup();
+            app.getGroupHelper().deleteGroup();
+            app.getGroupHelper().goToGroupsPage();
+            app.logout();
+        }
     }
 
 }

@@ -1,6 +1,7 @@
 package testSelenium.tests;
 
 import org.testng.annotations.Test;
+import testSelenium.model.UserData;
 
 /**
  * Created by 1 on 22.06.2020.
@@ -8,10 +9,19 @@ import org.testng.annotations.Test;
 public class TestDeleteContact extends TestBase {
     @Test
     public void deleteContact() {
-        app.getContactHelper().selectSecondContact();
-        app.getContactHelper().deleteContact();
+        if (!app.getContactHelper().checkFirstContact()) {
+            app.getContactHelper().addContact();
+            app.getNavigationHelper().navigateToHomePage();
 
-        app.getNavigationHelper().navigateToHomePage();
-        app.logout();
+            app.getContactHelper().selectfirstContactOnHomePage();
+            app.getContactHelper().deleteContact();
+            app.getNavigationHelper().navigateToHomePage();
+            app.logout();
+        } else {
+            app.getContactHelper().selectfirstContactOnHomePage();
+            app.getContactHelper().deleteContact();
+            app.getNavigationHelper().navigateToHomePage();
+            app.logout();
+        }
     }
 }

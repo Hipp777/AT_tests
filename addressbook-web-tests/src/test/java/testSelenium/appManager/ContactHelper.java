@@ -13,9 +13,14 @@ import static org.testng.Assert.*;
  */
 public class ContactHelper extends HelperBase {
 
-
     public ContactHelper(WebDriver driver) {
         super(driver);
+    }
+
+    public void addContact() {
+        navigateToCreateContactForm();
+        fillNewUserForm(new UserData("new user test name", "Second test name", "Testtest", "123454", "3454535", "11", "October", "1999"));
+        submitNewUserForm();
     }
 
     public void submitNewUserForm() {
@@ -63,11 +68,20 @@ public class ContactHelper extends HelperBase {
     }
 
     public void submitEditform() {
-       click(By.xpath("(//input[@name='update'])[2]"));
+        click(By.xpath("(//input[@name='update'])[2]"));
     }
 
     public void deleteContact() {
         click(By.xpath("//input[@value='Delete']"));
         assertTrue(closeAlertAndGetItsText().matches("^Delete 1 addresses[\\s\\S]$"));
     }
+
+    public boolean checkSecondContact() {
+        return isElementPresent(By.name("//table[@id='maintable']/tbody/tr[3]/td/input"));
+    }
+
+    public boolean checkFirstContact() {
+        return isElementPresent(By.name("selected[]"));
+    }
+
 }

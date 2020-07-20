@@ -37,12 +37,27 @@ public class GroupHelper extends HelperBase {
 
     }
 
-    public void startEditGroup() {
-       click(By.xpath("(//input[@name='edit'])[2]"));
+    public boolean checkFirstGroup() {
+        goToGroupsPage();
+        return isElementPresent(By.name("selected[]"));
     }
-    public void submitEditGroup(){
+
+    public void addGroup() {
+        goToGroupsPage();
+        startGroupCreation();
+        fillGroupForm(new GroupData("Test group add for test", "Logo test", "Footer test"));
+        submitGroupForm();
+        goToGroupsPage();
+    }
+
+    public void startEditGroup() {
+        click(By.xpath("(//input[@name='edit'])[2]"));
+    }
+
+    public void submitEditGroup() {
         click(By.name("update"));
     }
+
     public void deleteGroup() {
         click(By.xpath("(//input[@name='delete'])[2]"));
     }
