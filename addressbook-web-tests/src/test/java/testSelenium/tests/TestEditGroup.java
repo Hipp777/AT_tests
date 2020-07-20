@@ -4,6 +4,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import testSelenium.model.GroupData;
 
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -21,14 +22,19 @@ public class TestEditGroup extends TestBase {
        // int before = app.getGroupHelper().getGroupCount();
         List<GroupData> listBefore = app.getGroupHelper().getGroupList();
         app.getGroupHelper().goToGroupsPage();
-        app.getGroupHelper().selectGroup(0);
+        app.getGroupHelper().selectGroup(listBefore.size()-1);
         app.getGroupHelper().startEditGroup();
-        app.getGroupHelper().fillGroupForm(new GroupData("testEdit222", "Test edit 2", "Testedit3"));
+        GroupData groupData = new GroupData(listBefore.get(listBefore.size()-1).getId(),"test1","test2","test3");
+
+        app.getGroupHelper().fillGroupForm(groupData);
         app.getGroupHelper().submitEditGroup();
         app.getGroupHelper().goToGroupsPage();
        // after = app.getGroupHelper().getGroupCount();
         List<GroupData> listAfter = app.getGroupHelper().getGroupList();
         Assert.assertEquals(listAfter.size(), listBefore.size());
+        listBefore.remove(listBefore.size()-1);
+        listBefore.add(groupData);
+        Assert.assertEquals(new HashSet<Object>(listBefore),new HashSet<Object>(listAfter));
         app.logout();
 
     }
