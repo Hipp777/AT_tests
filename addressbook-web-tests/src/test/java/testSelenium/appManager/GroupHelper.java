@@ -46,11 +46,17 @@ public class GroupHelper extends HelperBase {
         return isElementPresent(By.name("selected[]"));
     }
 
-    public void addGroup() {
+    public void create() {
         goToGroupsPage();
         startGroupCreation();
-        fillGroupForm(new GroupData("Test group add for test", "Logo test", "Footer test"));
+        fillGroupForm(new GroupData().withName("Test2"));
         submitGroupForm();
+        goToGroupsPage();
+    }
+
+    public void delete(int index) {
+        selectGroup(index);
+        deleteGroup();
         goToGroupsPage();
     }
 
@@ -66,20 +72,28 @@ public class GroupHelper extends HelperBase {
         click(By.xpath("(//input[@name='delete'])[2]"));
     }
 
-    public int getGroupCount (){
-        return  driver.findElements(By.name("selected[]")).size();
+    public int getGroupCount() {
+        return driver.findElements(By.name("selected[]")).size();
     }
 
-    public List<GroupData> getGroupList() {
-        List <GroupData> groups = new ArrayList<GroupData>();
-        List <WebElement> elements = driver.findElements(By.cssSelector("span.group"));
-        for(WebElement element:elements){
+    public List<GroupData> list() {
+        List<GroupData> groups = new ArrayList<GroupData>();
+        List<WebElement> elements = driver.findElements(By.cssSelector("span.group"));
+        for (WebElement element : elements) {
             String name = element.getText();
             String id = element.findElement(By.tagName("input")).getAttribute("value");
             int id_i = Integer.parseInt(id);
-            GroupData group = new GroupData(id_i, name, null,null);
-            groups.add(group);
+            groups.add(new GroupData().withId(id_i).withName(name));
         }
         return groups;
+    }
+
+    public void modify(GroupData groupData, int index) {
+        goToGroupsPage();
+        selectGroup(index);
+        startEditGroup();
+        fillGroupForm(groupData);
+        submitEditGroup();
+        goToGroupsPage();
     }
 }

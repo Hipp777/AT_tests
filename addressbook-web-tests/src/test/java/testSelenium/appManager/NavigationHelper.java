@@ -13,7 +13,7 @@ public class NavigationHelper extends HelperBase{
         super(driver);
     }
 
-    public void navigateToHomePage() {
+    public void homePage() {
       click(By.linkText("home"));
     }
 }

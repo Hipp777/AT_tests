@@ -101,4 +101,17 @@ public class ContactHelper extends HelperBase {
         }
         return users;
     }*/
+  /* public List<UserData> getContactList() {
+       List <UserData> users = new ArrayList<UserData>();
+       //List <WebElement> elements = driver.findElements(By.cssSelector("[name=entry]"));
+       List <WebElement> elements = driver.findElements(By.name("entry"));
+       for(WebElement element:elements){
+           String name = element.getText();
+           String id = element.findElement(By.tagName("input")).getAttribute("id");
+           int id_i = Integer.parseInt(id);
+           UserData user = new UserData(id_i, name, null,null);
+           groups.add(group);
+       }
+       return groups;
+   }*/
 }
