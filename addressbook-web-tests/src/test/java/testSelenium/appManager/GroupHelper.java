@@ -4,9 +4,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import testSelenium.model.GroupData;
+import testSelenium.model.Groups;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by 1 on 22.06.2020.
@@ -76,8 +78,8 @@ public class GroupHelper extends HelperBase {
         return driver.findElements(By.name("selected[]")).size();
     }
 
-    public List<GroupData> list() {
-        List<GroupData> groups = new ArrayList<GroupData>();
+    public Groups all() {
+        Groups groups = new Groups();
         List<WebElement> elements = driver.findElements(By.cssSelector("span.group"));
         for (WebElement element : elements) {
             String name = element.getText();
@@ -88,12 +90,22 @@ public class GroupHelper extends HelperBase {
         return groups;
     }
 
-    public void modify(GroupData groupData, int index) {
+    public void modify(GroupData groupData) {
         goToGroupsPage();
-        selectGroup(index);
+        selectGroupById(groupData.getId());
         startEditGroup();
         fillGroupForm(groupData);
         submitEditGroup();
         goToGroupsPage();
+    }
+
+    public void delete(GroupData group) {
+        selectGroupById(group.getId());
+        deleteGroup();
+        goToGroupsPage();
+    }
+
+    private void selectGroupById(int id) {
+        driver.findElement(By.cssSelector("input[value='" + id +"']")).click();
     }
 }

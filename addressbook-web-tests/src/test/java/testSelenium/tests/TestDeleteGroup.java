@@ -1,11 +1,18 @@
 package testSelenium.tests;
 
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import testSelenium.model.GroupData;
+import testSelenium.model.Groups;
 
 import java.util.List;
+import java.util.Set;
+
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
 
 /**
  * Created by 1 on 23.06.2020.
@@ -15,7 +22,7 @@ public class TestDeleteGroup extends TestBase {
     public void ensurePreconditions() {
         app.group().goToGroupsPage();
 
-        if (app.group().list().size()==0) {
+        if (app.group().all().size()==0) {
             app.group().create();
         }
     }
@@ -23,19 +30,17 @@ public class TestDeleteGroup extends TestBase {
     @Test
     public void testDelGroup() {
 
-        List<GroupData> listBefore = app.group().list();
-        int index=listBefore.size() - 1;
-        app.group().delete(index);
-        List<GroupData> listAfter = app.group().list();
+        Groups listBefore = app.group().all();
+        GroupData deletedGroup=listBefore.iterator().next();
+        app.group().delete(deletedGroup);
+        Groups listAfter = app.group().all();
 
         Assert.assertEquals(listAfter.size(), listBefore.size() - 1);
-        listBefore.remove(index);
+
         // for (int i = 0; i < listAfter.size(); i++) {
         //      Assert.assertEquals(listAfter.get(i), listBefore.get(i));
         // }
-        Assert.assertEquals(listBefore, listAfter);
-
-
+        assertThat(listAfter, equalTo(listBefore.withOut(deletedGroup)));
 
     }
 
