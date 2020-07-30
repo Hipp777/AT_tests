@@ -1,16 +1,10 @@
 package testSelenium.tests;
 
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import testSelenium.model.GroupData;
 import testSelenium.model.Groups;
-
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
@@ -37,7 +31,7 @@ public class TestEditGroup extends TestBase {
         GroupData groupData = new GroupData().
                 withId(editedGroup.getId()).withName("test1").withHeader("test2").withFooter("test3");
         app.group().modify(groupData);
-
+        assertThat(app.group().getGroupCount(), equalTo(listBefore.size()));
         Groups listAfter = app.group().all();
         Assert.assertEquals(listAfter.size(), listBefore.size());
 

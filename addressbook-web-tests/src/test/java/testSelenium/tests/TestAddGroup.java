@@ -19,22 +19,34 @@ public class TestAddGroup extends TestBase {
     @Test
     public void testFirst() throws Exception {
         app.group().goToGroupsPage();
-
-       Groups listBefore = app.group().all();
-        app.group().startGroupCreation();
-        GroupData group = new GroupData().withName("Test group 2").withHeader("Logo test").withFooter("Footer test");
-        app.group().fillGroupForm(group);
-        app.group().submitGroupForm();
+        GroupData group = new GroupData().withName("test 1 create group").withHeader("header").withFooter("footer");
+        Groups listBefore = app.group().all();
+        app.group().create(group);
         app.group().goToGroupsPage();
 
         Groups listAfter = app.group().all();
-        assertThat(listAfter.size(),equalTo(listBefore.size() + 1) );
-       // Comparator<? super GroupData> byId = (g1,g2)->Integer.compare(g1.getId(),g2.getId());
+        assertThat(listAfter.size(), equalTo(listBefore.size() + 1));
+        // Comparator<? super GroupData> byId = (g1,g2)->Integer.compare(g1.getId(),g2.getId());
 
-       // Assert.assertEquals(listBefore,listAfter);
+        // Assert.assertEquals(listBefore,listAfter);
         assertThat(listAfter, equalTo(
                 listBefore.withAdded(group.withId(listAfter.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
     }
 
+    @Test
+    public void testSecondBadGroup() throws Exception {
+        app.group().goToGroupsPage();
+        GroupData group = new GroupData().withName("test 1 create group'").withHeader("header").withFooter("footer");
+        Groups listBefore = app.group().all();
+        app.group().create(group);
+        app.group().goToGroupsPage();
+
+        assertThat(app.group().getGroupCount(), equalTo(listBefore.size()));
+        Groups listAfter = app.group().all();
+
+        // Comparator<? super GroupData> byId = (g1,g2)->Integer.compare(g1.getId(),g2.getId());
+        // Assert.assertEquals(listBefore,listAfter);
+        assertThat(listAfter, equalTo(listBefore));
+    }
 }
 

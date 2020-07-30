@@ -1,15 +1,10 @@
 package testSelenium.tests;
 
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import testSelenium.model.GroupData;
 import testSelenium.model.Groups;
-
-import java.util.List;
-import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
@@ -33,6 +28,7 @@ public class TestDeleteGroup extends TestBase {
         Groups listBefore = app.group().all();
         GroupData deletedGroup=listBefore.iterator().next();
         app.group().delete(deletedGroup);
+        assertThat(app.group().getGroupCount(), equalTo(listBefore.size()-1));
         Groups listAfter = app.group().all();
 
         Assert.assertEquals(listAfter.size(), listBefore.size() - 1);

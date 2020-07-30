@@ -6,14 +6,13 @@ import org.openqa.selenium.WebElement;
 import testSelenium.model.GroupData;
 import testSelenium.model.Groups;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by 1 on 22.06.2020.
  */
 public class GroupHelper extends HelperBase {
+    private Groups groupCache = null;
 
     public GroupHelper(WebDriver driver) {
         super(driver);
@@ -48,14 +47,22 @@ public class GroupHelper extends HelperBase {
         return isElementPresent(By.name("selected[]"));
     }
 
+    public void create(GroupData group) {
+        goToGroupsPage();
+        startGroupCreation();
+        fillGroupForm(group);
+        submitGroupForm();
+        groupCache = null;
+        goToGroupsPage();
+    }
     public void create() {
         goToGroupsPage();
         startGroupCreation();
-        fillGroupForm(new GroupData().withName("Test2"));
+        fillGroupForm(new GroupData().withHeader("defoultGroupData"));
         submitGroupForm();
+        groupCache = null;
         goToGroupsPage();
     }
-
     public void delete(int index) {
         selectGroup(index);
         deleteGroup();
@@ -79,15 +86,18 @@ public class GroupHelper extends HelperBase {
     }
 
     public Groups all() {
-        Groups groups = new Groups();
+        if (groupCache != null) {
+            return new Groups(groupCache);
+        }
+        groupCache = new Groups();
         List<WebElement> elements = driver.findElements(By.cssSelector("span.group"));
         for (WebElement element : elements) {
             String name = element.getText();
             String id = element.findElement(By.tagName("input")).getAttribute("value");
             int id_i = Integer.parseInt(id);
-            groups.add(new GroupData().withId(id_i).withName(name));
+            groupCache.add(new GroupData().withId(id_i).withName(name));
         }
-        return groups;
+        return new Groups(groupCache);
     }
 
     public void modify(GroupData groupData) {
@@ -96,16 +106,20 @@ public class GroupHelper extends HelperBase {
         startEditGroup();
         fillGroupForm(groupData);
         submitEditGroup();
+        groupCache = null;
         goToGroupsPage();
+
     }
 
     public void delete(GroupData group) {
+
         selectGroupById(group.getId());
         deleteGroup();
+        groupCache = null;
         goToGroupsPage();
     }
 
     private void selectGroupById(int id) {
-        driver.findElement(By.cssSelector("input[value='" + id +"']")).click();
+        driver.findElement(By.cssSelector("input[value='" + id + "']")).click();
     }
 }
